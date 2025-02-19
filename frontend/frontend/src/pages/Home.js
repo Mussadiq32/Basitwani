@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import SearchForm from '../components/SearchForm';
 
 const Home = () => {
   const [featuredProperties, setFeaturedProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchParams, setSearchParams] = useState({
-    district: '',
-    propertyType: '',
-    category: '',
-    minPrice: '',
-    maxPrice: '',
-    bedrooms: ''
-  });
 
   useEffect(() => {
     fetchFeaturedProperties();
@@ -27,20 +20,6 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    // Construct query string from search parameters
-    const queryString = new URLSearchParams(searchParams).toString();
-    window.location.href = `/properties?${queryString}`;
-  };
-
-  const handleInputChange = (e) => {
-    setSearchParams({
-      ...searchParams,
-      [e.target.name]: e.target.value
-    });
   };
 
   return (
@@ -62,68 +41,7 @@ const Home = () => {
           <p className="text-xl mb-8">
             Discover your dream property in Jammu & Kashmir with world-class luxury and innovation
           </p>
-          {/* Search Form */}
-          <form onSubmit={handleSearchSubmit} className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <select
-                name="district"
-                value={searchParams.district}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded text-gray-700"
-              >
-                <option value="">Select District</option>
-                <option value="Srinagar">Srinagar</option>
-                <option value="Jammu">Jammu</option>
-                {/* Add all 20 districts */}
-              </select>
-              <select
-                name="propertyType"
-                value={searchParams.propertyType}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded text-gray-700"
-              >
-                <option value="">Property Type</option>
-                <option value="residential">Residential</option>
-                <option value="commercial">Commercial</option>
-                <option value="land">Land</option>
-                <option value="plot">Plot</option>
-              </select>
-              <select
-                name="category"
-                value={searchParams.category}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded text-gray-700"
-              >
-                <option value="">Category</option>
-                <option value="sale">For Sale</option>
-                <option value="rent">For Rent</option>
-                <option value="homestay">Homestay</option>
-                <option value="holiday-home">Holiday Home</option>
-              </select>
-              <input
-                type="number"
-                name="minPrice"
-                value={searchParams.minPrice}
-                onChange={handleInputChange}
-                placeholder="Min Price"
-                className="w-full p-3 border rounded text-gray-700"
-              />
-              <input
-                type="number"
-                name="maxPrice"
-                value={searchParams.maxPrice}
-                onChange={handleInputChange}
-                placeholder="Max Price"
-                className="w-full p-3 border rounded text-gray-700"
-              />
-              <button
-                type="submit"
-                className="w-full p-3 bg-primary text-white rounded hover:bg-primary-dark transition duration-300"
-              >
-                Search Properties
-              </button>
-            </div>
-          </form>
+          <SearchForm />
         </div>
       </section>
 

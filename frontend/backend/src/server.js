@@ -6,6 +6,7 @@ const http = require('http');
 const dotenv = require('dotenv');
 const propertyRoutes = require('./routes/propertyRoutes');
 const authRoutes = require('./routes/authRoutes');
+const locationRoutes = require('./routes/locationRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +21,14 @@ const wss = new WebSocket.Server({ server });
 app.use(cors());
 app.use(express.json());
 
+// Rate limiting for OpenStreetMap API
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 60 // limit each IP to 60 requests per windowMs
+});
+app.use('/api/locations', limiter);
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/royal-estates', {
   useNewUrlParser: true,
@@ -31,6 +40,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/royal-est
 // Routes
 app.use('/api/properties', propertyRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/locations', locationRoutes);
 
 // WebSocket connection handling
 wss.on('connection', (ws) => {
