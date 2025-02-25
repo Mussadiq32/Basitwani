@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import Properties from './pages/Properties';
 import PropertyDetails from './pages/PropertyDetails';
+import MetropolitanProperties from './pages/MetropolitanProperties';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/properties" element={<Properties />} />
             <Route path="/properties/:id" element={<PropertyDetails />} />
+            <Route path="/metropolitan-properties" element={<MetropolitanProperties />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
@@ -41,4 +43,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

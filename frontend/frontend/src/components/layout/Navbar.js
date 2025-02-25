@@ -34,6 +34,12 @@ const Navbar = () => {
                 Properties
               </Link>
               <Link
+                to="/metropolitan-properties"
+                className="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-primary"
+              >
+                Metropolitan Properties
+              </Link>
+              <Link
                 to="/about"
                 className="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-primary"
               >
@@ -138,6 +144,12 @@ const Navbar = () => {
             Properties
           </Link>
           <Link
+            to="/metropolitan-properties"
+            className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-gray-600 hover:bg-gray-50 hover:border-primary"
+          >
+            Metropolitan Properties
+          </Link>
+          <Link
             to="/about"
             className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-gray-600 hover:bg-gray-50 hover:border-primary"
           >
@@ -186,4 +198,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

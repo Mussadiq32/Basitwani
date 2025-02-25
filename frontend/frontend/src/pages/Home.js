@@ -104,22 +104,23 @@ const Home = () => {
           </p>
         </div>
       </section>
-
-      {/* Districts Section */}
+      {/* Major Cities Section */}
       <section className="py-16 px-4 bg-gray-100">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Explore Our Districts</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Explore Major Cities</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[
-              'Srinagar', 'Jammu', 'Anantnag', 'Baramulla', 'Budgam',
-              'Ganderbal', 'Kupwara', 'Pulwama', 'Shopian', 'Kulgam'
-            ].map((district) => (
+              'Mumbai', 'Delhi', 'Bangalore', 'Chandigarh', 'Chennai',
+              'Hyderabad', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur',
+              'Srinagar', 'Jammu', 'Lucknow', 'Indore', 'Bhopal'
+            ].map((city) => (
               <Link
-                key={district}
-                to={`/properties?district=${district}`}
-                className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition duration-300 text-center"
+                key={city}
+                to={`/properties?city=${city}`}
+                className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition duration-300 text-center group"
               >
-                <h3 className="font-semibold">{district}</h3>
+                <h3 className="font-semibold group-hover:text-primary transition-colors">{city}</h3>
+                <p className="text-sm text-gray-500 mt-1">View Properties</p>
               </Link>
             ))}
           </div>
@@ -129,4 +130,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;

@@ -7,6 +7,9 @@
   <!-- Google Fonts & FontAwesome for icons -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="theme.js" defer></script>
+  <script src="main.js" defer></script>
   <style>
     /* CSS Variables */
     :root {
@@ -22,6 +25,7 @@
       --card-bg: #fff;
       --input-bg: #fff;
       --input-border: #eee;
+      --header-text-color: #333;
     }
 
     /* Dark mode variables */
@@ -36,6 +40,7 @@
       --card-bg: #2d2d2d;
       --input-bg: #2d2d2d;
       --input-border: #404040;
+      --header-text-color: #fff;
     }
 
     /* Reset & Base Styles */
@@ -56,43 +61,84 @@
       color: inherit;
     }
 
-    /* Preloader */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--header-text-color);
+      margin: 0;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .logo-container:hover h1 {
+      color: var(--primary-color);
+    }
+
+    .logo-icon {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover .logo-icon {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    /* Modern Preloader */
     #preloader {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--bg-color);
+      background: linear-gradient(135deg, var(--bg-color), var(--card-bg));
       z-index: 9999;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: opacity 0.3s ease-out;
+      transition: opacity 0.5s ease-out;
     }
 
     .loader-container {
-      position: relative;
-      width: 200px;
-      height: 200px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .chinar-leaf {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      top: 50%;
-      left: 50%;
-      transform-origin: center;
-      animation: leafFloat 3s infinite ease-in-out;
-    }
-
-    .chinar-leaf::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    .loader-dot {
+      width: 12px;
+      height: 12px;
       background: var(--primary-color);
+      border-radius: 50%;
+      animation: dotWave 1.5s ease-in-out infinite;
+    }
+
+    .loader-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loader-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes dotWave {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translateY(-15px);
+        opacity: 1;
+      }
+    }
       clip-path: path('M30,0 C45,10 60,25 60,40 C60,55 45,60 30,60 C15,60 0,55 0,40 C0,25 15,10 30,0');
     }
 
@@ -170,6 +216,155 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
     }
+    /* Modern Search Form Styles */
+    .search-form {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transform: translateY(0);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-form:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .search-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .search-form:hover::before {
+      opacity: 1;
+    }
+
+    .search-form input,
+    .search-form select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      background: var(--input-bg);
+      color: var(--text-color);
+      font-size: 0.95rem;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-form input:hover,
+    .search-form select:hover {
+      background: var(--card-bg);
+      transform: translateY(-2px);
+    }
+
+    .search-form input:focus,
+    .search-form select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: var(--card-bg);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(240, 165, 0, 0.1);
+    }
+
+    .search-form input::placeholder,
+    .search-form select::placeholder {
+      color: #999;
+      font-weight: 400;
+    }
+
+    .search-form-buttons {
+      display: flex;
+      gap: 15px;
+      grid-column: 1 / -1;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .search-form button {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-form button.search-submit {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: white;
+    }
+
+    .search-form button.search-save {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--text-color);
+    }
+
+    .search-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-form button:active {
+      transform: translateY(0);
+    }
+
+    .search-form button i {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .search-form button:hover i {
+      transform: scale(1.1);
+    }
+
+    .search-form select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .search-form {
+        padding: 20px;
+        gap: 15px;
+      }
+      
+      .search-form-buttons {
+        flex-direction: column;
+      }
+      
+      .search-form button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
 
     @media (max-width: 768px) {
       .since-badge {
@@ -217,7 +412,7 @@
     }
 
     .header-nav a {
-      color: var(--text-color);
+      color: var(--header-text-color);
       font-weight: 500;
       font-size: 0.95rem;
       text-transform: uppercase;
@@ -289,9 +484,41 @@
       gap: 1rem;
     }
 
+    .theme-toggle {
+      cursor: pointer;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      border: none;
+      box-shadow: 0 2px 10px rgba(240, 165, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle i {
+      color: #fff;
+      font-size: 1.2rem;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transform: scale(1);
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 4px 15px rgba(240, 165, 0, 0.3);
+    }
+
+    .theme-toggle:hover i {
+      transform: scale(1.2);
+    }
+
     .header-icon {
       font-size: 1.2rem;
-      color: var(--text-color);
+      color: var(--header-text-color);
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -317,7 +544,7 @@
 
     /* Add margin-top to banner to avoid fixed header overlap */
     #banner {
-      margin-top: 80px; /* Adjust this value to match your header height */
+      margin-top: 80px;
       height: calc(100vh - 80px);
       background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750') no-repeat center center/cover;
       position: relative;
@@ -327,7 +554,8 @@
       text-align: center;
       color: #fff;
       overflow: hidden;
-      animation: zoomIn 2s ease-out;
+      animation: zoomIn 2s cubic-bezier(0.4, 0, 0.2, 1);
+      perspective: 1000px;
     }
     @keyframes zoomIn {
       0% { transform: scale(1.2); }
@@ -338,23 +566,106 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
       z-index: 1;
+      transition: background 0.3s ease;
+    }
+
+    #banner:hover::after {
+      background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
     }
     .banner-content {
       position: relative;
       z-index: 2;
-      animation: fadeInUp 1.5s ease-out;
+      animation: fadeInUp 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .banner-content:hover {
+      transform: translateZ(20px);
     }
     .banner-content h1 {
       font-size: 3.5em;
       margin-bottom: 20px;
       text-transform: uppercase;
       letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, #f0f0f0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .banner-content h1:hover {
+      transform: scale(1.05);
     }
     .banner-content p {
       font-size: 1.3em;
       margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUpFade 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+    }
+
+    /* Metropolitan Cities Section Styles */
+    .city-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .city-card {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      background: var(--card-bg);
+    }
+
+    .city-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .city-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .city-info {
+      padding: 1rem;
+      background: var(--card-bg);
+    }
+
+    .city-name {
+      margin: 0;
+      color: var(--text-color);
+      font-size: 1.5rem;
+    }
+
+    .metropolitan-section {
+      padding: 4rem 2rem;
+      background: var(--bg-color);
+    }
+
+    .metropolitan-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-color);
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    @keyframes slideUpFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     .banner-logo {
       position: absolute;
@@ -541,6 +852,96 @@
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Metropolitan Cities Section */
+    .metro-cities {
+      padding: 0 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .metro-cities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .metro-city-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      aspect-ratio: 3/4;
+    }
+
+    .metro-city-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .metro-city-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .metro-city-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .metro-city-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .metro-city-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .metro-city-name::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.4s ease;
+    }
+
+    .metro-city-card:hover .metro-city-name::after {
+      width: 50px;
+    }
+
+    .metro-city-properties {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .metro-cities-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .metro-city-name {
+        font-size: 1.2rem;
+      }
     }
 
     /* Modern Featured Properties Section */
@@ -820,13 +1221,99 @@
     }
 
     /* Property Categories Section */
-    .categories-grid {
+    .categories-grid,
+    .metro-cities-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       padding: 0 2rem;
       max-width: 1400px;
       margin: 0 auto;
+    }
+    /* 
+Cities Section */
+    #metro-cities {
+      padding: 100px 0;
+      background: var(--bg-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #metro-cities::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(45deg, var(--card-bg) 25%, transparent 25%),
+                      linear-gradient(-45deg, var(--card-bg) 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, var(--card-bg) 75%),
+                      linear-gradient(-45deg, transparent 75%, var(--card-bg) 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+
+    #metro-cities .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    #metro-cities h2 {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 2.8em;
+      font-weight: 800;
+      color: var(--text-color);
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleFade 1s ease-out forwards;
+    }
+
+    @keyframes titleFade {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #metro-cities h2::after {
+      content: "";
+      width: 60px;
+      height: 3px;
+      background: var(--primary-color);
+      display: block;
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    #metro-cities p.section-description {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      color: var(--text-color);
+      font-size: 1.2em;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: descriptionFade 1s ease-out 0.3s forwards;
+    }
+
+    @keyframes descriptionFade {
+      to {
+        opacity: 0.9;
+        transform: translateY(0);
+      }
     }
 
     .category-card {
@@ -998,6 +1485,174 @@
       display: block;
       margin: 15px auto 0;
       border-radius: 2px;
+    }
+
+    /* Metropolitan Cities Card Styles */
+    .metro-city-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .metro-city-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .metro-city-image {
+      position: relative;
+      padding-top: 75%;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .metro-city-image img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .metro-city-card:hover .metro-city-image img {
+      transform: scale(1.08);
+    }
+
+    .metro-city-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.8));
+      opacity: 0;
+      transition: all 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+
+    .metro-city-card:hover .metro-city-overlay {
+      opacity: 1;
+    }
+
+    .metro-city-content {
+      color: white;
+      z-index: 2;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .metro-city-card:hover .metro-city-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .metro-city-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .metro-city-name::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.4s ease;
+    }
+
+    .metro-city-card:hover .metro-city-name::after {
+      width: 50px;
+    }
+
+    .property-count {
+      font-size: 1rem;
+      opacity: 0;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transform: translateX(-20px);
+      transition: all 0.5s ease 0.2s;
+    }
+
+    .property-count i {
+      color: var(--primary-color);
+    }
+
+    .metro-city-card:hover .property-count {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .explore-button {
+      background: transparent;
+      color: white;
+      border: 2px solid var(--primary-color);
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease 0.3s;
+    }
+
+    .explore-button:hover {
+      background: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(240, 165, 0, 0.3);
+    }
+
+    .metro-city-card:hover .explore-button {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .explore-button i {
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .explore-button:hover i {
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 768px) {
+      .metro-cities-grid {
+        padding: 0 1rem;
+        gap: 1.5rem;
+      }
+
+      .metro-city-content {
+        padding: 1.5rem;
+      }
+
+      .metro-city-name {
+        font-size: 1.3rem;
+      }
     }
 
     #property-calculator {
@@ -2500,11 +3155,125 @@
   </style>
 </head>
 <body>
+    <!-- Metropolitan Cities Section -->
+    <section id="metro-cities">
+      <div class="container">
+        <h2>Properties in Top Metropolitan Cities</h2>
+        <p class="section-description">Explore premium properties in India's most dynamic and fast-growing metro cities. Find residential and commercial properties in major urban hubs with excellent infrastructure and connectivity.</p>
+        
+        <div class="metro-cities-grid">
+          <!-- Delhi -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5" alt="Delhi Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Delhi</h3>
+                <p class="property-count">2,500+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mumbai -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f" alt="Mumbai Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Mumbai</h3>
+                <p class="property-count">3,200+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bangalore -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2" alt="Bangalore Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Bangalore</h3>
+                <p class="property-count">2,800+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chennai -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220" alt="Chennai Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Chennai</h3>
+                <p class="property-count">1,900+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hyderabad -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1572707691716-5243eec9f129" alt="Hyderabad Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Hyderabad</h3>
+                <p class="property-count">2,100+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kolkata -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1558431382-27e303142255" alt="Kolkata Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Kolkata</h3>
+                <p class="property-count">1,700+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pune -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1572707691716-5243eec9f129" alt="Pune Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Pune</h3>
+                <p class="property-count">1,500+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ahmedabad -->
+          <div class="metro-city-card">
+            <div class="metro-city-image">
+              <img src="https://images.unsplash.com/photo-1572707691716-5243eec9f129" alt="Ahmedabad Skyline">
+              <div class="metro-city-overlay"></div>
+              <div class="metro-city-content">
+                <h3 class="metro-city-name">Ahmedabad</h3>
+                <p class="property-count">1,300+ Properties Available</p>
+                <button class="explore-button">Explore Properties <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   <!-- Preloader -->
   <div id="preloader">
     <div class="loader-container">
-      <div class="chinar-leaf"></div>
-      <div class="building-silhouette"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
     </div>
   </div>
 
@@ -2515,12 +3284,15 @@
   <header id="header">
     <div class="header-container">
       <div class="header-left">
+        <div class="logo-container">
+          <i class="fas fa-home logo-icon"></i>
+          <h1>Royal Group</h1>
+        </div>
         <nav class="header-nav">
-          <a href="#banner">Home</a>
-          <a href="#properties">Properties</a>
-          <a href="#areas">Areas</a>
-          <a href="#offerings">Offerings</a>
-          <a href="#about">About</a>
+          <a href="#" class="nav-link"><i class="fas fa-map-marker-alt"></i> Properties</a>
+          <a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Market Trends</a>
+          <a href="#" class="nav-link"><i class="fas fa-building"></i> New Developments</a>
+          <a href="#" class="nav-link"><i class="fas fa-handshake"></i> Services</a>
         </nav>
       </div>
       
@@ -2530,10 +3302,14 @@
         </div>
         
         <div class="header-actions">
-          <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
-            <i class="fas fa-moon"></i>
+          <button class="action-btn">
+            <i class="fas fa-calendar-alt"></i>
+            Schedule Tour
           </button>
           <div class="header-icons">
+            <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+              <i class="fas fa-moon"></i>
+            </button>
             <i class="fas fa-heart header-icon" title="Favorites"></i>
             <i class="fas fa-bell header-icon" title="Notifications"></i>
             <i class="fas fa-user header-icon" title="Account"></i>
@@ -2600,6 +3376,69 @@
         <button type="submit">Search Properties</button>
         <button type="button" id="saveSearchBtn">Save Search</button>
       </form>
+    </div>
+  </section>
+
+  <!-- Metropolitan Cities Section -->
+  <section class="metro-cities">
+    <h2>Properties in Top Metropolitan Cities</h2>
+    <div class="metro-cities-grid">
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1582972236019-ea4af5ffe587" alt="Mumbai">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Mumbai</div>
+          <div class="metro-city-properties">2,345 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5" alt="Delhi">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Delhi</div>
+          <div class="metro-city-properties">1,987 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2" alt="Bangalore">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Bangalore</div>
+          <div class="metro-city-properties">1,756 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1567157577867-05ccb1388e66" alt="Hyderabad">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Hyderabad</div>
+          <div class="metro-city-properties">1,543 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445" alt="Chennai">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Chennai</div>
+          <div class="metro-city-properties">1,432 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1567157577867-05ccb1388e66" alt="Pune">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Pune</div>
+          <div class="metro-city-properties">1,234 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1567157577867-05ccb1388e66" alt="Kolkata">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Kolkata</div>
+          <div class="metro-city-properties">1,123 Properties</div>
+        </div>
+      </div>
+      <div class="metro-city-card">
+        <img src="https://images.unsplash.com/photo-1567157577867-05ccb1388e66" alt="Ahmedabad">
+        <div class="metro-city-info">
+          <div class="metro-city-name">Ahmedabad</div>
+          <div class="metro-city-properties">987 Properties</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2903,23 +3742,65 @@
     </div>
   </section>
 
-  <!-- Jammu &amp; Kashmir Districts Section -->
-  <section id="jammu-districts">
+  <!-- Major Cities Section -->
+  <section id="major-cities">
     <div class="districts-container">
-      <h2>Explore All 22 Districts</h2>
+      <h2>Explore Major Cities</h2>
       <div class="districts-slider">
         <div class="districts-track">
-          <!-- Srinagar District -->
+          <!-- Mumbai -->
           <div class="district-slide">
             <div class="area-card">
-              <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg" alt="Srinagar">
+              <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445" alt="Mumbai">
               <div class="area-info">
-                <h3>Srinagar</h3>
-                <p>Summer capital and largest city of J&K</p>
+                <h3>Mumbai</h3>
+                <p>Financial Capital of India</p>
                 <div class="district-stats">
                   <div class="district-stat">
                     <i class="fas fa-building"></i>
-                    <span>200+ Properties</span>
+                    <span>800+ Properties</span>
+                  </div>
+                  <div class="district-stat">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Premium Location</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delhi -->
+          <div class="district-slide">
+            <div class="area-card">
+              <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5" alt="Delhi">
+              <div class="area-info">
+                <h3>Delhi</h3>
+                <p>Capital City with Rich Heritage</p>
+                <div class="district-stats">
+                  <div class="district-stat">
+                    <i class="fas fa-building"></i>
+                    <span>700+ Properties</span>
+                  </div>
+                  <div class="district-stat">
+                    <i class="fas fa-landmark"></i>
+                    <span>Historic Area</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bangalore -->
+          <div class="district-slide">
+            <div class="area-card">
+              <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220" alt="Bangalore">
+              <div class="area-info">
+                <h3>Bangalore</h3>
+                <p>Silicon Valley of India</p>
+                <div class="district-stats">
+                  <div class="district-stat">
+                    <i class="fas fa-building"></i>
+                    <span>500+ Properties</span>
                   </div>
                   <div class="district-stat">
                     <i class="fas fa-map-marker-alt"></i>
